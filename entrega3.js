@@ -25,9 +25,9 @@ do {
     let nombre = prompt("Nombre Completo:");
     let documento = Number(prompt("Documento: "));
     let email = prompt("Email: ");
-    let fechaDeIda = prompt("Fecha de ida solicitada  ingrese Dia/mes/ano");
+    let fechaDeIda = prompt("Fecha de ida solicitada  ingrese Dia/mes/año");
     let fechaDeVuelta = prompt(
-      "Fecha de Vuelta solicitada  ingrese Dia/mes/ano"
+      "Fecha de Vuelta solicitada  ingrese Dia/mes/año"
     );
     let usuario = new Usuario(
       nombre,
