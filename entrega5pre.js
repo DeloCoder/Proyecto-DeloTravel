@@ -1,3 +1,9 @@
+const boton = document.getElementById("botonDeAyuda");
+boton.addEventListener("click", () => {
+  console.log("El cliente solicita ayuda desde la web!!!");
+  alert("En breve sera contactado por un agente");
+});
+
 function startApp() {
   encabezadoPagina();
 }
@@ -9,12 +15,11 @@ function encabezadoPagina() {
 
   const bienvenida = document.createElement("h2");
   bienvenida.innerText =
-    "Bienvenido a nuestra consola de Autogestion de pasajes";
+    "                               Consola de Autogestion de pasajes";
   document.body.appendChild(bienvenida);
 
   const resumenDePasajeros = document.createElement("h3");
-  resumenDePasajeros.innerText =
-    "Aqui debajo se muestra su seleccion de pasajeros y sus datos de contacto:  ";
+  resumenDePasajeros.innerText = "Listado de pasajeros y datos de contacto:  ";
   document.body.appendChild(resumenDePasajeros);
 }
 
@@ -33,7 +38,7 @@ class Usuario {
 alert("Por favor ingrese a continuacion los datos que solicita el sistema");
 
 function registrarUsuario() {
-  let nombre = prompt ("Nombre Completo:");
+  let nombre = prompt("Nombre Completo:");
   let documento = Number(prompt("Documento: "));
   let email = prompt("Email: ");
   let fechaDeIda = prompt("Fecha de ida solicitada  ingrese Dia/mes/año");
@@ -66,28 +71,35 @@ function registrarUsuario() {
     const emailParaImprimir = document.createElement("p");
     emailParaImprimir.innerText = "Email: " + email;
     document.body.appendChild(emailParaImprimir);
-
   }
 
   imprimirDatos();
 }
+
 registrarUsuario();
 
 function elegirDestino() {
   destinos = Number(
     prompt(`Por favor seleccione el destino deseado:
 
-${1} - Cordoba
-${2} - Mendoza
-${3} - Santiago de Chile
-${4} - Bogota
-${5} - Punta Cana
+  ${1} - Cordoba
+  ${2} - Mendoza
+  ${3} - Santiago de Chile
+  ${4} - Bogota
+  ${5} - Punta Cana
 
-${6} + Ayuda
-${7} * Salir`)
+  ${6} + Ayuda
+  ${7} * Salir`)
   );
 }
 elegirDestino();
+
+function imprimirDestinos() {
+  const destinoParaImprimir = document.createElement("p");
+  destinoParaImprimir.innerText = "Destino Seleccionado: " + destinos;
+  document.body.appendChild(destinoParaImprimir);
+}
+imprimirDestinos();
 
 function pasajeCordoba() {
   const valorBasePasaje = 5000;
@@ -132,6 +144,7 @@ function pasajeBogota() {
   console.log("Destino seleccionado: Bogota");
   console.log("Costo final: 40.000 pesos");
 }
+
 function pasajePuntaCana() {
   const valorBasePasaje = 5000;
   let precioPuntaCana = valorBasePasaje * 10;
@@ -169,7 +182,9 @@ switch (destinos) {
     alert(
       "En breve un agente se contactara con Usted, para solucionar sus requerimientos. Gracias por paciencia!"
     );
-    console.log("ATENCION!!! Requerimiento de contacto del cliente!!! ");
+    console.log(
+      "ATENCION!!! Solicitud de ayuda del cliente desde el Menu 1 !!! "
+    );
     break;
   }
   case 7: {
@@ -203,7 +218,9 @@ function seguirComprando() {
       alert(
         "En breve un agente se contactara con Usted, para solucionar sus requerimientos. Gracias por su paciencia!"
       );
-      console.log("ATENCION!!! Requerimiento de contacto del cliente!!! ");
+      console.log(
+        "ATENCION!!! Solicitud de ayuda del cliente desde el Menu 2!!!"
+      );
       break;
     }
   }
