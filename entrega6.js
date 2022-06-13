@@ -12,9 +12,12 @@ function startApp() {
 }
 startApp();
 function encabezadoPagina() {
+  const formulario = document.getElementById("titulo")
+  
+  
   const tituloPrincipal = document.createElement("h1");
   tituloPrincipal.innerText = "AutoTravel";
-  document.body.appendChild(tituloPrincipal);
+  formulario.appendChild(tituloPrincipal);
 
   const bienvenida = document.createElement("h2");
   bienvenida.innerText = "Consola de Automatica de gestion de pasajes";
@@ -24,12 +27,6 @@ function encabezadoPagina() {
   resumenDePasajeros.innerText = "Listado de pasajeros y datos de contacto:";
   document.body.appendChild(resumenDePasajeros);
 }
-
-function enviarFormulario()
-let document.getElementById("enviarDatos").onclick = function () {
-
-};
-enviarFormulario();
 
 
 
@@ -48,45 +45,69 @@ class Usuario {
 alert("Por favor ingrese a continuacion los datos que solicita el sistema");
 
 function registrarUsuario() {
-  let nombre = prompt("Nombre Completo:");
-  let documento = Number(prompt("Documento: "));
-  let email = prompt("Email: ");
-  let fechaDeIda = prompt("Fecha de ida solicitada  ingrese Dia/mes/año");
-  let fechaDeVuelta = prompt("Fecha de Vuelta solicitada  ingrese Dia/mes/año");
-  let usuario = new Usuario(
-    nombre,
-    documento,
-    email,
-    fechaDeIda,
-    fechaDeVuelta
-  );
+  const nuevoNombre = document.getElementById("Nombre")
+  const nuevoDocumento = document.getElementById("Documento")
+  const nuevoEmail = document.getElementById("Email")
+  const nuevoFechaDeIda = document.getElementById("FechaDeIda")
+  const nuevoFechaDeVuelta = document.getElementById("FechaDeVuelta")
+   const enviar = document.getElementById("enviarDatos")
+  enviar.onclick = ()=> {
+    let nombre = nuevoNombre.value 
+    let documento = nuevoDocumento.value
+    let email = nuevoEmail.value
+    let fechaDeIda = nuevoFechaDeIda.value
+    let fechaDeVuelta = nuevoFechaDeVuelta.value
+    let usuario = new Usuario(
+      nombre,
+      documento,
+      email,
+      fechaDeIda,
+      fechaDeVuelta);
+      
+      usuarios.push(usuario);
+      imprimirDatos();
+    };
+  
 
-  usuarios.push(usuario);
-  console.log("DATOS DEL CLIENTE Nombre Pasajero: " + nombre);
+
+
+
+
+  
+ /* console.log("DATOS DEL CLIENTE Nombre Pasajero: " + nombre);
   console.log("Documento: " + documento);
   console.log("Email: " + email);
   console.log("Fecha de Ida: " + fechaDeIda);
-  console.log("Fecha de vuelta: " + fechaDeVuelta);
+  console.log("Fecha de vuelta: " + fechaDeVuelta);*/
   console.log(usuarios);
 
-  function imprimirDatos() {
-    const nombreParaImprimir = document.createElement("p");
-    nombreParaImprimir.innerText = "Nombre: " + nombre;
-    document.body.appendChild(nombreParaImprimir);
-
-    const documentoParaImprimir = document.createElement("p");
-    documentoParaImprimir.innerText = "Documento: " + documento;
-    document.body.appendChild(documentoParaImprimir);
-
-    const emailParaImprimir = document.createElement("p");
-    emailParaImprimir.innerText = "Email: " + email;
-    document.body.appendChild(emailParaImprimir);
-  }
-
-  imprimirDatos();
+  
+  
 }
 
 registrarUsuario();
+
+function imprimirDatos() {
+  const nombreParaImprimir = document.createElement("p");
+  nombreParaImprimir.innerText = "Nombre: " + nombre;
+  document.body.appendChild(nombreParaImprimir);
+
+  const documentoParaImprimir = document.createElement("p");
+  documentoParaImprimir.innerText = "Documento: " + documento;
+  document.body.appendChild(documentoParaImprimir);
+
+  const emailParaImprimir = document.createElement("p");
+  emailParaImprimir.innerText = "Email: " + email;
+  document.body.appendChild(emailParaImprimir);
+}
+
+
+
+
+
+
+
+
 
 function elegirDestino() {
   destinos = Number(
@@ -100,7 +121,7 @@ function elegirDestino() {
   ${7} * Salir`)
   );
 }
-elegirDestino();
+//elegirDestino();
 
 function imprimirDestinos() {
   const destinoParaImprimir = document.createElement("p");
