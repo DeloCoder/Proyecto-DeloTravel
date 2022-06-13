@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Entrega6</title>
+    <link rel="stylesheet" href="entrega6.css" />
+    <script defer src="entrega6.js"></script>
+  </head>
+  <body>
+    <button id="botonDeAyuda">AYUDA</button>
+    <h3 id="solicitudAyuda"></h3>
+    <form action="entrega6.html" method="GET">
+      <div>
+        <label for="nombre">Nombre Completo</label>
+        <input type="text" name="nombre" id="nombre" required size="35px" />
+      </div>
+      <div>
+        <label for="documento">Documento</label>
+        <input type="number" name="documento" id="documento" required />
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" size="35px" requiered />
+      </div>
+      <div>
+        <label id="fechaDeIda">Fecha de Ida</label>
+        <input type="date" name="fechaDeIda" id="fechaDeIda" required />
+      </div>
+      <div>
+        <label for="fechaDeVuelta">Fecha de Vuelta</label>
+        <input type="date" name="fechaDeVuelta" id="fechaDeVuelta" required />
+      </div>
+      <br />
+      <br />
+      <div>
+        <button id="resetDatos" type="reset" name="reset">Reset</button>
+        <button id="enviarDatos" type="submit" name="enviar">Enviar</button>
+      </div>
+    </form>
+  </body>
+</html>
