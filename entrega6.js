@@ -1,115 +1,125 @@
-function solicitudAyuda() {
-  document.getElementById("solicitudAyuda").innerHTML =
-    "Un agente se comunicara con Ud a la brevedad";
-  console.log("ATENCION!!! El cliente solicita ayuda en la pagina");
-}
-document.getElementById("botonDeAyuda").onclick = function () {
-  solicitudAyuda();
-};
 
-function startApp() {
-  encabezadoPagina();
+
+function solicitudAyuda() {
+    document.getElementById("solicitudAyuda").innerHTML =
+    "Un agente se comunicara con Ud a la brevedad";
+    console.log("ATENCION!!! El cliente solicita ayuda en la pagina");
 }
-startApp();
+    document.getElementById("botonDeAyuda").onclick = function ()
+    { solicitudAyuda();}
+
+ function enviarForm () {
+
+  const enviar = document.getElementById("enviarDatos");
+  enviar.addEventListener("click", ()=> {
+    Swal.fire(
+      'Gracias por elegir AutoTravel!',
+      'Su soliciutd ha sido enviada y confirmada, al pie de esta pagina podra confirmar la informacion de su reserva',
+      'success'
+    )
+
+
+    registrarUsuario()} );
+  
+ }   
+
+
 function encabezadoPagina() {
   const formulario = document.getElementById("titulo")
-  
-  
   const tituloPrincipal = document.createElement("h1");
-  tituloPrincipal.innerText = "AutoTravel";
+  tituloPrincipal.innerText = "AUTOTRAVEL";
   formulario.appendChild(tituloPrincipal);
 
   const bienvenida = document.createElement("h2");
-  bienvenida.innerText = "Consola de Automatica de gestion de pasajes";
+  bienvenida.innerText = "Consola Automatica de gestion de pasajes";
   document.body.appendChild(bienvenida);
 
   const resumenDePasajeros = document.createElement("h3");
   resumenDePasajeros.innerText = "Listado de pasajeros y datos de contacto:";
-  document.body.appendChild(resumenDePasajeros);
-}
-
+  document.body.appendChild(resumenDePasajeros);}
 
 
 let usuarios = [];
-class Usuario {
-  constructor(nombre, documento, email, fechaDeIda, fechaDeVuelta) {
+  class Usuario {
+  constructor(nombre, documento, email, fechaDeIda, fechaDeVuelta, destino) {
     this.nombre = nombre;
     this.documento = documento;
     this.email = email;
     this.fechaDeIda = fechaDeIda;
     this.fechaDeVuelta = fechaDeVuelta;
-    this.destino = 0;
+    this.destino = destino;
   }
 }
+//alert("Por favor ingrese a continuacion los datos que solicita el sistema"); Era de cuando habia q llamar con prompt y alert
+ 
+  function registrarUsuario() {
 
-alert("Por favor ingrese a continuacion los datos que solicita el sistema");
+    
+  let nuevoNombre = document.getElementById("nombre").value;
+  let nuevoDocumento = document.getElementById("documento").value;
+  let nuevoEmail = document.getElementById("email").value;
+  let nuevoFechaDeIda = document.getElementById("fechaIda").value;
+  let nuevoFechaDeVuelta = document.getElementById("fechaVuelta").value;
+  let nuevoDestino = document.getElementById("destino").value;
 
-function registrarUsuario() {
-  const nuevoNombre = document.getElementById("Nombre")
-  const nuevoDocumento = document.getElementById("Documento")
-  const nuevoEmail = document.getElementById("Email")
-  const nuevoFechaDeIda = document.getElementById("FechaDeIda")
-  const nuevoFechaDeVuelta = document.getElementById("FechaDeVuelta")
-   const enviar = document.getElementById("enviarDatos")
-  enviar.onclick = ()=> {
-    let nombre = nuevoNombre.value 
-    let documento = nuevoDocumento.value
-    let email = nuevoEmail.value
-    let fechaDeIda = nuevoFechaDeIda.value
-    let fechaDeVuelta = nuevoFechaDeVuelta.value
-    let usuario = new Usuario(
-      nombre,
-      documento,
-      email,
-      fechaDeIda,
-      fechaDeVuelta);
-      
-      usuarios.push(usuario);
-      imprimirDatos();
-    };
+
+  let pasajero = new Usuario (
+      nuevoNombre,
+      nuevoDocumento,
+      nuevoEmail,
+      nuevoFechaDeIda,
+      nuevoFechaDeVuelta,
+      nuevoDestino);
+      usuarios.push(pasajero);
+      imprimirDatos(pasajero);
   
-
-
-
-
-
-  
- /* console.log("DATOS DEL CLIENTE Nombre Pasajero: " + nombre);
-  console.log("Documento: " + documento);
-  console.log("Email: " + email);
-  console.log("Fecha de Ida: " + fechaDeIda);
-  console.log("Fecha de vuelta: " + fechaDeVuelta);*/
+  console.log("DATOS DEL CLIENTE Nombre Pasajero: " + nuevoNombre );
+  console.log("Documento: " + nuevoDocumento);
+  console.log("Email: " + nuevoEmail);
+  console.log("Fecha de Ida: " + nuevoFechaDeIda);
+  console.log("Fecha de vuelta: " + nuevoFechaDeVuelta);
+  console.log("Destino Seleccionado " + nuevoDestino);
   console.log(usuarios);
 
+};
   
-  
-}
 
-registrarUsuario();
-
-function imprimirDatos() {
+function imprimirDatos(pasajero) {
   const nombreParaImprimir = document.createElement("p");
-  nombreParaImprimir.innerText = "Nombre: " + nombre;
+  nombreParaImprimir.innerText = "Nombre: " + pasajero.nombre;
   document.body.appendChild(nombreParaImprimir);
 
   const documentoParaImprimir = document.createElement("p");
-  documentoParaImprimir.innerText = "Documento: " + documento;
+  documentoParaImprimir.innerText = "Documento: " + pasajero.documento;
   document.body.appendChild(documentoParaImprimir);
 
   const emailParaImprimir = document.createElement("p");
-  emailParaImprimir.innerText = "Email: " + email;
+  emailParaImprimir.innerText = "Email: " + pasajero.email;
   document.body.appendChild(emailParaImprimir);
-}
+
+  const destinoParaImprimir = document.createElement("p");
+  destinoParaImprimir.innerText = "Destino Seleccionado: " + pasajero.destino;
+  document.body.appendChild(destinoParaImprimir);}
 
 
 
+function pasajeCordoba() {
+  const valorBasePasaje = 5000;
+  let precioCordoba = valorBasePasaje * 1;
+  alert(
+    "Estimado Cliente, su pasaje a Cordoba sera emitido y enviado al Email registrado"
+  );
+  alert("Costo Final incluidos impuestos: " + precioCordoba + " pesos");
+  console.log("Destino seleccionado: Cordoba");
+  console.log("Costo final: 5.000 pesos");
+
+
+document.getElementById("cordoba").onclick = function ()
+    { pasajeCordoba();}}
 
 
 
-
-
-
-function elegirDestino() {
+/*function elegirDestino() {
   destinos = Number(
     prompt(`Por favor seleccione el destino deseado:
   ${1} - Cordoba
@@ -121,25 +131,9 @@ function elegirDestino() {
   ${7} * Salir`)
   );
 }
-//elegirDestino();
+elegirDestino();*/
 
-function imprimirDestinos() {
-  const destinoParaImprimir = document.createElement("p");
-  destinoParaImprimir.innerText = "Destino Seleccionado: " + destinos;
-  document.body.appendChild(destinoParaImprimir);
-}
-imprimirDestinos();
 
-function pasajeCordoba() {
-  const valorBasePasaje = 5000;
-  let precioCordoba = valorBasePasaje * 1;
-  alert(
-    "Estimado Cliente, su pasaje a Cordoba sera emitido y enviado al Email registrado"
-  );
-  alert("Costo Final incluidos impuestos: " + precioCordoba + " pesos");
-  console.log("Destino seleccionado: Cordoba");
-  console.log("Costo final: 5.000 pesos");
-}
 
 function pasajeMendoza() {
   const valorBasePasaje = 5000;
@@ -185,7 +179,7 @@ function pasajePuntaCana() {
   console.log("Costo final: 50.000 pesos");
 }
 
-switch (destinos) {
+/*switch (destinos) {
   case 1: {
     pasajeCordoba();
     break;
@@ -223,8 +217,8 @@ switch (destinos) {
   default: {
     alert("Opcion ingresada invalida");
   }
-}
-function seguirComprando() {
+}*/
+/*function seguirComprando() {
   agregarPasaje = Number(
     prompt(` - Si Ud desea AGREGAR otro pasaje a su carrito presione ${1}.
                                 
@@ -266,5 +260,7 @@ function seguirComprando() {
       "Muchas gracias por dedicar su tiempo para valorar nuestro sistema! Que tenga una excelente jornada"
     );
   }
-}
-seguirComprando();
+} 
+seguirComprando();*/
+encabezadoPagina();
+enviarForm ();
