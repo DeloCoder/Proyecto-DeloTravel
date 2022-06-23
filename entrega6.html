@@ -6,41 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Entrega6</title>
     <link rel="stylesheet" href="entrega6.css"/>
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="entrega6.js"></script>
   </head>
   <body>
     <button id="botonDeAyuda">AYUDA</button>
-    <h3 id="solicitudAyuda"></h3>
-    <div id="titulo">
-      
-    </div>
-    <form action="entrega6.html" method="GET">
+      <h3 id="solicitudAyuda"></h3>
+      <div id="titulo">
+      </div>
+     <form action="entrega6.html" method="GET">
       <div>
         <label for="nombre">Nombre Completo</label>
-        <input type="text" name="nombre" id="Nombre" required size="35px" />
-      </div>
-      <div>
+        <input type="text" name="nombre" id="nombre" required size="35px" value="" />
+       </div>
+       <div>
         <label for="documento">Documento</label>
-        <input type="number" name="documento" id="Documento" required />
-      </div>
-      <div>
+        <input type="number" name="documento" id="documento" />
+       </div>
+       <div>
         <label for="email">Email</label>
-        <input type="email" name="email" id="Email" size="35px" requiered />
-      </div>
-      <div>
+        <input type="email" name="email" id="email" size="35px"  />
+       </div>
+       <div>
         <label id="fechaDeIda">Fecha de Ida</label>
-        <input type="date" name="fechaDeIda" id="FechaDeIda" required />
-      </div>
-      <div>
+        <input type="date" name="fechaDeIda" id="fechaIda" />
+       </div>
+       <div>
         <label for="fechaDeVuelta">Fecha de Vuelta</label>
-        <input type="date" name="fechaDeVuelta" id="FechaDeVuelta" required />
-      </div>
-      <br />
-      <br />
-      <div>
-        <button id="resetDatos" type="reset" name="reset">Reset</button>
-        <button id="enviarDatos" type="submit">Enviar</button>
-      </div>
-    </form>
+        <input type="date" name="fechaDeVuelta" id="fechaVuelta"  />
+       </div>
+       <div>
+          <label for="cordoba">Cordoba</label>
+          <select id="destino" name="destino">
+            <option value="Cordoba" selected="selected">Cordoba</option>
+            <option value="Mendoza">Mendoza</option>
+            <option value="santiago De Chile">Santiago De Chile</option>
+            <option value="Bogota">Bogota</option>
+            <option value="Punta Cana">Punta Cana</option>
+          </select>
+       </div>
+       <br />
+       <div>
+        
+        <button id="enviarDatos" type="button">Enviar</button>
+       </div>
+     </form>
   </body>
 </html>
