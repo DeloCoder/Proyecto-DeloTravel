@@ -8,7 +8,7 @@
      }
 
     h2 {font-family:'Times New Roman', Times, serif  ;
-     font-size: 55px; color: #2626bb; font-weight: bold; text-align: center;
+     font-size: 55px; color: #1d8734; font-weight: bold; text-align: center;
      }
 
     h3 {font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -16,10 +16,10 @@
 
     p { font-family: Verdana, Geneva, Tahoma, sans-serif; 
      font-size: 20px; color:  rgb(169, 190, 190); 
-     background: #3169eac5; margin: 20px; width: 39%; }
+     background: #083fc0c5; margin: 20px; width: 39%; }
 
     body {background-color: #cfdce3cc;
-        background-image: url("cielo3.jpg"); background-size: 100%;
+        background-image: url("travel2.jpg"); background-size: 100%;
     }
      
     button {

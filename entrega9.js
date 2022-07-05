@@ -1,10 +1,3 @@
-//hago array de usuarios
-let usuarios = [];
-
-//hago array de compras 
-let compras = [];
-
-
 
 
 function solicitudAyuda() {
@@ -15,7 +8,7 @@ function solicitudAyuda() {
     document.getElementById("botonDeAyuda").onclick = function ()
     { solicitudAyuda();}
 
-//boton registrar usuario
+
 function enviarForm () {
     const enviar = document.getElementById("enviarDatos");
     enviar.addEventListener("click", ()=> {
@@ -27,20 +20,6 @@ function enviarForm () {
     registrarUsuario()} );
 }   
 
-//boton compras
-function enviarCompra () {
-    const enviar = document.getElementById("botonAgregar");
-    enviar.addEventListener("click",() => {
-            Swal.fire({
-                icon: "success",
-                title: "Su compra esta confirmada. El costo de la misma se cargara a su tarjeta",
-                
-            });
-            comprarPasaje();
-        });
-     //setTimeout(()=>{comprarPasaje(),3000});
-
-    }   
 
 function encabezadoPagina() {
   const formulario = document.getElementById("titulo")
@@ -51,63 +30,79 @@ function encabezadoPagina() {
   resumenDePasajeros.innerText = "Listado de pasajeros y datos de contacto:";
   document.body.appendChild(resumenDePasajeros);}
 
-
+//hago array de usuarios
+let usuarios = [];
   class Usuario {
-  constructor(nombre, documento, email) {
+  constructor(nombre, documento, email, fechaDeIda, fechaDeVuelta, destino) {
     this.nombre = nombre;
     this.documento = documento;
     this.email = email;
-    
+    this.fechaDeIda = fechaDeIda;
+    this.fechaDeVuelta = fechaDeVuelta;
+    this.destino = destino;
   }
 }
 
+ 
+  //hago array de compras 
+//let Compra = [];
+ // class Compra 
 
-  class Pasaje {
-   constructor(fechaDeIda, fechaDeVuelta, destino) {
-     this.fechaDeIda = fechaDeIda;
-     this.fechaDeVuelta = fechaDeVuelta;
-     this.destino = destino;
-   }
- }
-
-function registrarUsuario() {
-   
+  function registrarUsuario() {
+  
   let nuevoNombre = document.getElementById("nombre").value;
   let nuevoDocumento = document.getElementById("documento").value;
   let nuevoEmail = document.getElementById("email").value;
-let pasajero = new Usuario (
-      nuevoNombre,
-      nuevoDocumento,
-      nuevoEmail,
-      );
-      usuarios.push(pasajero);
-      imprimirPasajero(pasajero);
-  console.log("DATOS DEL CLIENTE Nombre Pasajero: " + nuevoNombre );
-  console.log("Documento: " + nuevoDocumento);
-  console.log("Email: " + nuevoEmail);  
-}
-  
-
-function comprarPasaje () {
-
   let nuevoFechaDeIda = document.getElementById("fechaIda").value;
   let nuevoFechaDeVuelta = document.getElementById("fechaVuelta").value;
   let nuevoDestino = document.getElementById("destino").value;
-let pasaje = new Pasaje (
-    nuevoFechaDeIda,
-    nuevoFechaDeVuelta,
-    nuevoDestino
-    );
-    compras.push(pasaje);
-    imprimirPasaje(pasaje);
+
+  let pasajero = new Usuario (
+      nuevoNombre,
+      nuevoDocumento,
+      nuevoEmail,
+      nuevoFechaDeIda,
+      nuevoFechaDeVuelta,
+      nuevoDestino);
+
+      usuarios.push(pasajero);
+      imprimirDatos(pasajero);
+  
+  console.log("DATOS DEL CLIENTE Nombre Pasajero: " + nuevoNombre );
+  console.log("Documento: " + nuevoDocumento);
+  console.log("Email: " + nuevoEmail);
   console.log("Fecha de Ida: " + nuevoFechaDeIda);
   console.log("Fecha de vuelta: " + nuevoFechaDeVuelta);
   console.log("Destino Seleccionado " + nuevoDestino);
-}
+  console.log("Medio de pago: ")
+};
+  
 
+function comprarConBoton () {
+  const comprarPasaje = document.getElementById("comprarPasaje");
+  comprarPasaje.addEventListener("click", ()=> {
+ 
+    Swal.fire({
+      title: 'Esta seguro de confirmar la compra?',
+      text: "Una vez aceptado, se le realizaran los cargos al medio de pago seleccionado",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'SI, quiero comprar yaaaaa hdp!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Pasaje Comprado!',
+          'Su e-ticket esta siendo emitido',
+          'success'
+        )
+      }
+    })  
+})};
 
-
-function imprimirPasajero(pasajero) {
+//Muestro los datos de los pax y su compra en la pagina
+function imprimirDatos(pasajero) {
   const nombreParaImprimir = document.createElement("p");
   nombreParaImprimir.innerText = "Nombre: " + pasajero.nombre;
   document.body.appendChild(nombreParaImprimir);
@@ -119,19 +114,15 @@ function imprimirPasajero(pasajero) {
   const emailParaImprimir = document.createElement("p");
   emailParaImprimir.innerText = "Email: " + pasajero.email;
   document.body.appendChild(emailParaImprimir);
-}
 
-  function imprimirPasaje(pasaje) {
-    const destinoParaImprimir = document.createElement("p");
-    destinoParaImprimir.innerText = "Destino Seleccionado: " + pasaje.destino;
-    document.body.appendChild(destinoParaImprimir);
-}
-
+  const destinoParaImprimir = document.createElement("p");
+  destinoParaImprimir.innerText = "Destino Seleccionado: " + pasajero.destino;
+  document.body.appendChild(destinoParaImprimir);}
 
 
 
   //armado del carrito
-  /*const contenedorItems = document.getElementById('contenedorItems')
+  const contenedorItems = document.getElementById('contenedorItems')
   let precioTotal = 0
   const mostrarItems = () => {
   contenedorItems.innerHTML = ""
@@ -142,15 +133,13 @@ function imprimirPasajero(pasajero) {
   contenedorItems.appendChild(div)
   })
   precioTotal.innerText = carrito.reduce((acc, dest) => acc + dest.costo, 0)
-  }*/
+  }
   
   
 
 
-
-
-
-/*function pasajeCordoba() {
+/*
+function pasajeCordoba() {
   const valorBasePasaje = 5000;
   let precioCordoba = valorBasePasaje * 1;
   alert(
@@ -163,23 +152,6 @@ function imprimirPasajero(pasajero) {
 
 document.getElementById("cordoba").onclick = function ()
     { pasajeCordoba();}}
-
-
-
-function elegirDestino() {
-  destinos = Number(
-    prompt(`Por favor seleccione el destino deseado:
-  ${1} - Cordoba
-  ${2} - Mendoza
-  ${3} - Santiago de Chile
-  ${4} - Bogota
-  ${5} - Punta Cana
-  ${6} + Ayuda
-  ${7} * Salir`)
-  );
-}
-elegirDestino();
-
 
 
 function pasajeMendoza() {
@@ -224,9 +196,56 @@ function pasajePuntaCana() {
   alert("Valor Total: " + precioPuntaCana + " pesos");
   console.log("Destino seleccionado: Punta Cana");
   console.log("Costo final: 50.000 pesos");
-}*/
+}
+
+
+/*function seguirComprando() {
+  agregarPasaje = Number(
+    prompt(` - Si Ud desea AGREGAR otro pasaje a su carrito presione ${1}.
+                                
+    * Si lo que Ud desea es FINALIZAR la operacion, presione ${2}.`)
+  );
+  switch (agregarPasaje) {
+    case 1: {
+      registrarUsuario();
+      break;
+    }
+
+    case 2: {
+      alert("Gracias, esperamos verlo muy pronto otra vez, en DeloViajes");
+      break;
+    }
+  }
+  if (agregarPasaje === 1) {
+    elegirDestino();
+    seguirComprando();
+  } else if (agregarPasaje === 2) {
+    let evaluacion = 0;
+    evaluacion = prompt(
+      "Seria tan amable de evaluar su experiencia con la terminal Autoservicio puntuando de 1 a 10 ? (siendo 1 muy malo, y 10 excelente)"
+    );
+    console.log("Calificacion de usuario recibida: " + evaluacion);
+
+    if (evaluacion <= 4) {
+      let evaluacion2 = prompt(
+        "Seria tan amable indicarnos motivo de su calificacion? "
+      );
+      console.log(
+        "!!!ATENCION!!!  Calificacion de servicio DEFICIENTE!          Reevaluar con supervisor servicio ofrecido / Motivo declarado:    " +
+          evaluacion2
+      );
+    }
+  }
+  {
+    alert(
+      "Muchas gracias por dedicar su tiempo para valorar nuestro sistema! Que tenga una excelente jornada"
+    );
+  }
+} 
+seguirComprando();*/
 
 
 encabezadoPagina();
 enviarForm ();
-enviarCompra();
+comprarConBoton ();
+//pasajeComprado ();
