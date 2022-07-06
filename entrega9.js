@@ -77,11 +77,31 @@ let usuarios = [];
   console.log("Medio de pago: ")
 };
   
+let weather = {
+ apiKey: "56eff6cf81c370f8dff94bced718ce9d",
+fetchWeather: function(value){
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${this.apiKey}`)
+  .then(response => response.json())
+  .then(data => console.log('DATAAAAAA',data));
+  
+},
+search: function () {
+this.fetchWeather(document.getElementById("clima").value);
+
+}
+}
+document.querySelector(".searchButton").addEventListener("click" , () =>{
+  weather.search ();
+} )
+
+
 
 function comprarConBoton () {
+  
+ 
   const comprarPasaje = document.getElementById("comprarPasaje");
   comprarPasaje.addEventListener("click", ()=> {
- 
+   
     Swal.fire({
       title: 'Esta seguro de confirmar la compra?',
       text: "Una vez aceptado, se le realizaran los cargos al medio de pago seleccionado",
@@ -100,6 +120,8 @@ function comprarConBoton () {
       }
     })  
 })};
+
+
 
 //Muestro los datos de los pax y su compra en la pagina
 function imprimirDatos(pasajero) {
