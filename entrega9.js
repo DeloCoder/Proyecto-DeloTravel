@@ -33,13 +33,13 @@ function encabezadoPagina() {
 //hago array de usuarios
 let usuarios = [];
   class Usuario {
-  constructor(nombre, documento, email, fechaDeIda, fechaDeVuelta, destino) {
-    this.nombre = nombre;
-    this.documento = documento;
+  constructor(passengerName, document, email, goDate, backDate, destination) {
+    this.passengerName = passengerName;
+    this.document = document;
     this.email = email;
-    this.fechaDeIda = fechaDeIda;
-    this.fechaDeVuelta = fechaDeVuelta;
-    this.destino = destino;
+    this.goDate = goDate;
+    this.backDate = backDate;
+    this.destination = destination;
   }
 }
 
@@ -50,31 +50,31 @@ let usuarios = [];
 
   function registrarUsuario() {
   
-  let nuevoNombre = document.getElementById("nombre").value;
-  let nuevoDocumento = document.getElementById("documento").value;
-  let nuevoEmail = document.getElementById("email").value;
-  let nuevoFechaDeIda = document.getElementById("fechaIda").value;
-  let nuevoFechaDeVuelta = document.getElementById("fechaVuelta").value;
-  let nuevoDestino = document.getElementById("destino").value;
+  let newPassengerName = document.getElementById("passengerName").value;
+  let newDocument = document.getElementById("document").value;
+  let newEmail = document.getElementById("email").value;
+  let newGoDate = document.getElementById("goDate").value;
+  let newBackDate = document.getElementById("backDate").value;
+  let newDestination = document.getElementById("destination").value;
 
   let pasajero = new Usuario (
-      nuevoNombre,
-      nuevoDocumento,
-      nuevoEmail,
-      nuevoFechaDeIda,
-      nuevoFechaDeVuelta,
-      nuevoDestino);
+      newPassengerName,
+      newDocument,
+      newEmail,
+      newGoDate,
+      newBackDate,
+      newDestination);
 
       usuarios.push(pasajero);
       imprimirDatos(pasajero);
   
-  console.log("DATOS DEL CLIENTE Nombre Pasajero: " + nuevoNombre );
-  console.log("Documento: " + nuevoDocumento);
-  console.log("Email: " + nuevoEmail);
-  console.log("Fecha de Ida: " + nuevoFechaDeIda);
-  console.log("Fecha de vuelta: " + nuevoFechaDeVuelta);
-  console.log("Destino Seleccionado " + nuevoDestino);
-  console.log("Medio de pago: ")
+  console.log("DATOS DEL CLIENTE Nombre Pasajero: " + newPassengerName );
+  console.log("Documento: " + newDocument);
+  console.log("Email: " + newEmail);
+  console.log("Fecha de Ida: " + newGoDate);
+  console.log("Fecha de vuelta: " + newBackDate);
+  console.log("Destino Seleccionado " + newDestination);
+  console.log("Medio de pago: " + paymentMethod)
 };
   
 let weather = {
@@ -89,33 +89,31 @@ fetchWeather: function(city){
     return response.json();
   })
   .then(data => console.log('DATAAAAAA',data))
-  .then((data) => this.displayWeather(data));
-  
+  .then((data) => this.displayWeather(data)); 
 },
+
 displayWeather: function(data) {
   const {name} = data;
-  // const {icon, description} = data.weather [0];
-  // const {temp, humidity } = data.main
-  // const {speed } = data.wind;
+  const {icon, description} = data.weather [0];
+  const {temp, humidity } = data.main
+  const {speed } = data.wind;
   console.log(name);
   document.querySelector(".city").innerText = "El Clima en " + name;
   },
 
 search: function () {
-this.fetchWeather(document.getElementById("clima").value);
+this.fetchWeather(document.getElementById("weather").value);
 
 },
 
 }
-document.getElementById("climaButton").addEventListener("click" , () =>{
+document.getElementById("weatherButton").addEventListener("click" , () =>{
   weather.search ();
 } )
 
 
 
 function comprarConBoton () {
-  
- 
   const comprarPasaje = document.getElementById("comprarPasaje");
   comprarPasaje.addEventListener("click", ()=> {
    
@@ -126,12 +124,12 @@ function comprarConBoton () {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'SI, quiero comprar yaaaaa hdp!'
+      confirmButtonText: 'SI, quiero confirmar la compra'
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
           'Pasaje Comprado!',
-          'Su e-ticket esta siendo emitido',
+          `Su e-ticket a ${destination} esta siendo emitido`,
           'success'
         )
       }
@@ -143,11 +141,11 @@ function comprarConBoton () {
 //Muestro los datos de los pax y su compra en la pagina
 function imprimirDatos(pasajero) {
   const nombreParaImprimir = document.createElement("p");
-  nombreParaImprimir.innerText = "Nombre: " + pasajero.nombre;
+  nombreParaImprimir.innerText = "Nombre: " + pasajero.name;
   document.body.appendChild(nombreParaImprimir);
 
   const documentoParaImprimir = document.createElement("p");
-  documentoParaImprimir.innerText = "Documento: " + pasajero.documento;
+  documentoParaImprimir.innerText = "Documento: " + pasajero.document;
   document.body.appendChild(documentoParaImprimir);
 
   const emailParaImprimir = document.createElement("p");
@@ -155,7 +153,7 @@ function imprimirDatos(pasajero) {
   document.body.appendChild(emailParaImprimir);
 
   const destinoParaImprimir = document.createElement("p");
-  destinoParaImprimir.innerText = "Destino Seleccionado: " + pasajero.destino;
+  destinoParaImprimir.innerText = "Destino Seleccionado: " + pasajero.destination;
   document.body.appendChild(destinoParaImprimir);}
 
 

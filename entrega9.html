@@ -16,30 +16,30 @@
       </div>
 
     <section h1="registro">
-      <form action="entrega6.html" method="GET" class="form-register"></form>
+      <form action="entrega9.html" method="GET" class="form-register"></form>
          <div>
-         <label for="nombre">Nombre Completo</label>
-         <input type="text" name="nombre" id="nombre" required size="35px" value="" />
+         <label for="passengerName">Nombre Completo</label>
+         <input type="text" name="passengerName" id="passengerName" required size="35px" value="" />
          </div>
          <div>
-         <label for="documento">Documento</label>
-         <input type="number" name="documento" id="documento" />
+         <label for="document">Documento</label>
+         <input type="number" name="document" id="document" />
          </div>
          <div>
          <label for="email">Email</label>
          <input type="email" name="email" id="email" size="35px"  />
          </div>
          <div>
-           <label for="medioDePAgo">Medio de Pago</label>
-           <select id="medioDePago" name="medioDePAgo">
+           <label for="paymentMethod">Medio de Pago</label>
+           <select id="paymentMethod" name="paymentMethod">
             <option value=" "></option>
-            <option value="Tarjeta de Debito">Tarjeta de Debito</option>
-            <option value="Tarjeta de Credito">Tarjeta de Credito</option>
-            <option value="Transferencia Electronica">Transferencia Electronica</option>
+            <option value="debitCard">Tarjeta de Debito</option>
+            <option value="creditCard">Tarjeta de Credito</option>
+            <option value="transfer">Transferencia Electronica</option>
          </div>
          <div>
-            <label for= "Numero de tarjeta">Numero de Tarjeta o Transferencia</label>
-            <input type="number" name="numeroTarjeta" id="numeroTarjeta" placeholder="Numero de Tarjeta"/>
+            <label for= "cardNumber">Numero de Tarjeta o Transferencia</label>
+            <input type="number" name="cardNumber" id="cardNumber" placeholder="Numero de Tarjeta"/>
           </div>
      </form>
    </section>
@@ -47,16 +47,16 @@
    <section>
       <form>
         <div>
-         <label id="fechaDeIda">Fecha de Ida</label>
-         <input type="date" name="fechaDeIda" id="fechaIda" />
+         <label id="goDate">Fecha de Ida</label>
+         <input type="date" name="goDate" id="goDate" />
         </div>
         <div>
-         <label for="fechaDeVuelta">Fecha de Vuelta</label>
-         <input type="date" name="fechaDeVuelta" id="fechaVuelta"  />
+         <label for="backDate">Fecha de Vuelta</label>
+         <input type="date" name="backDate" id="backDate"  />
         </div>
         <div>
-          <label for="destino">Destino</label>
-          <select id="destino" name="destino">
+          <label for="destination">Destino</label>
+          <select id="destination" name="destination">
             <option value=" "></option>
             <option value="Cordoba">Cordoba</option>
             <option value="Mendoza">Mendoza</option>
@@ -66,9 +66,9 @@
           </select>
         </div>
         <div>
-          <label for="clima">El Clima en tu Destino</label>
-          <input type="text" name="clima" id="clima" required size="35px" value="" />
-          <button id="climaButton" type="button" class="searchButton">Enviar</button>
+          <label for="weather">El Clima en tu Destino</label>
+          <input type="text" name="weather" id="weather" required size="35px" value="" />
+          <button id="weatherButton" type="button" class="searchButton">Enviar</button>
         </div>
         <br />
         <div>
@@ -79,12 +79,12 @@
     </section>
     <section>
 <div class="weather">
-  <h2 class="city">HOLA</h2>
-  <h1 class="temp">27 grados</h1>
+  <h2 class="city"></h2>
+  <h1 class="temp"></h1>
   <img src=" " alt=" " class="icon" />
-  <div class="description">Sky Clear</div>
-  <div class="humidity">60%</div>
-  <div class="WindSpeed">8 km/h</div>
+  <div class="description"></div>
+  <div class="humidity"></div>
+  <div class="WindSpeed"></div>
 
 </div>
 
