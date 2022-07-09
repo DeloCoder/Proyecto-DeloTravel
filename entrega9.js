@@ -27,32 +27,40 @@ function encabezadoPagina() {
   tituloPrincipal.innerText = "AUTOTRAVEL";
   formulario.appendChild(tituloPrincipal);
   const resumenDePasajeros = document.createElement("h3");
-  resumenDePasajeros.innerText = "Listado de pasajeros y datos de contacto:";
+  resumenDePasajeros.innerText = "Listado de pasajes emitidos y datos de contacto:";
   document.body.appendChild(resumenDePasajeros);}
 
 //hago array de usuarios
 let usuarios = [];
   class Usuario {
-  constructor(passengerName, document, email, goDate, backDate, destination) {
+  constructor(passengerName, document, email, paymentMethod, goDate, backDate, destination) {
     this.passengerName = passengerName;
     this.document = document;
     this.email = email;
+    this.paymentMethod = paymentMethod;
     this.goDate = goDate;
     this.backDate = backDate;
     this.destination = destination;
   }
 }
 
- 
-  //hago array de compras 
-//let Compra = [];
- // class Compra 
+//hago array de compras 
+let Comprar = [];
+class Pasaje {
+  constructor(paymentMethod, goDate, backDate, destination) {
+    this.paymentMethod = paymentMethod;
+    this.goDate = goDate;
+    this.backDate = backDate;
+    this.destination = destination;
+  }
 
-  function registrarUsuario() {
-  
+}
+
+function registrarUsuario() {
   let newPassengerName = document.getElementById("passengerName").value;
   let newDocument = document.getElementById("document").value;
   let newEmail = document.getElementById("email").value;
+  let newPaymentMethod = document.getElementById("paymentMethod").value;
   let newGoDate = document.getElementById("goDate").value;
   let newBackDate = document.getElementById("backDate").value;
   let newDestination = document.getElementById("destination").value;
@@ -61,6 +69,7 @@ let usuarios = [];
       newPassengerName,
       newDocument,
       newEmail,
+      newPaymentMethod,
       newGoDate,
       newBackDate,
       newDestination);
@@ -74,57 +83,68 @@ let usuarios = [];
   console.log("Fecha de Ida: " + newGoDate);
   console.log("Fecha de vuelta: " + newBackDate);
   console.log("Destino Seleccionado " + newDestination);
-  console.log("Medio de pago: " + paymentMethod)
+  console.log("Medio de pago seleccionado: " + newPaymentMethod);
 };
-  
+
+
+//Utilizo una API para consumir datos sobre clima mundial
 let weather = {
  apiKey: "56eff6cf81c370f8dff94bced718ce9d",
-fetchWeather: function(city){
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey}`)
-  .then((response) => {
-    if (!response.ok) {
-      alert("No weather found.");
-      throw new Error("No weather found.");
-    }
-    return response.json();
+  fetchWeather: function(city){
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey}&units=metric&lang=es`)
+  
+    .then((response) => response.json())
+  
+    .then((data) => this.displayWeather(data))
+  
+    .catch((error)=> {
+      swal.fire({
+        icon:"error",
+        position:"center",
+        title:`Error: ${error}`,
+      });
   })
-  .then(data => console.log('DATAAAAAA',data))
-  .then((data) => this.displayWeather(data)); 
 },
 
-displayWeather: function(data) {
+ //Deconstruyo los datos de la API para mostrar solo los q quiero en pantalla
+  displayWeather: function(data) {
   const {name} = data;
-  const {icon, description} = data.weather [0];
-  const {temp, humidity } = data.main
+  const {icon, description} = data.weather[0];
+  const {temp, humidity } = data.main;
   const {speed } = data.wind;
-  console.log(name);
   document.querySelector(".city").innerText = "El Clima en " + name;
+  document.querySelector(".icon").src ="https://openweathermap.org/img/wn/" + icon + ".png";
+  document.querySelector(".description").innerText = description;
+  document.querySelector(".temp").innerText = temp + "°C"; 
+  document.querySelector(".humidity").innerText = "Humedad: " + humidity + "%";
+  document.querySelector(".wind").innerText = "Viento: " + speed + "Km/h";
   },
 
-search: function () {
-this.fetchWeather(document.getElementById("weather").value);
-
-},
+    search: function () {
+    this.fetchWeather(document.getElementById("weather").value);
+  },
 
 }
-document.getElementById("weatherButton").addEventListener("click" , () =>{
+
+  document.getElementById("weatherButton").addEventListener("click" , () =>{
   weather.search ();
 } )
 
 
-
+//Desarrollo el boton de "Comprar Pasaje"
 function comprarConBoton () {
   const comprarPasaje = document.getElementById("comprarPasaje");
   comprarPasaje.addEventListener("click", ()=> {
    
+    const destination = document.getElementById("destination").value;
     Swal.fire({
       title: 'Esta seguro de confirmar la compra?',
-      text: "Una vez aceptado, se le realizaran los cargos al medio de pago seleccionado",
+      text: `Una vez aceptado, se le realizaran los cargos a su medio de pago seleccionado`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'SI, quiero confirmar la compra'
+      confirmButtonText: 'SI, confirmo la compra'
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
@@ -132,34 +152,37 @@ function comprarConBoton () {
           `Su e-ticket a ${destination} esta siendo emitido`,
           'success'
         )
+        
       }
     })  
 })};
 
 
 
-//Muestro los datos de los pax y su compra en la pagina
+//Muestro los datos de los pax y su compra en la pagina, separado x pasajero
 function imprimirDatos(pasajero) {
+ //genero DIV para  meter en box los datos de pax 
+  const containerData = document.createElement("div");
+  containerData.setAttribute("class","passengerData");
+  document.body.appendChild(containerData);
+ //Agrego cpn AppendChild diferentes datos a ese box 
   const nombreParaImprimir = document.createElement("p");
-  nombreParaImprimir.innerText = "Nombre: " + pasajero.name;
-  document.body.appendChild(nombreParaImprimir);
-
+  nombreParaImprimir.innerText = "Nombre: " + pasajero.passengerName;
+  containerData.appendChild(nombreParaImprimir);
   const documentoParaImprimir = document.createElement("p");
   documentoParaImprimir.innerText = "Documento: " + pasajero.document;
-  document.body.appendChild(documentoParaImprimir);
-
+  containerData.appendChild(documentoParaImprimir);
   const emailParaImprimir = document.createElement("p");
   emailParaImprimir.innerText = "Email: " + pasajero.email;
-  document.body.appendChild(emailParaImprimir);
-
+  containerData.appendChild(emailParaImprimir);
   const destinoParaImprimir = document.createElement("p");
   destinoParaImprimir.innerText = "Destino Seleccionado: " + pasajero.destination;
-  document.body.appendChild(destinoParaImprimir);}
+  containerData.appendChild(destinoParaImprimir);}
 
 
 
-  //armado del carrito
-  const contenedorItems = document.getElementById('contenedorItems')
+  //Armado del carrito
+  /*const contenedorItems = document.getElementById('contenedorItems')
   let precioTotal = 0
   const mostrarItems = () => {
   contenedorItems.innerHTML = ""
@@ -170,13 +193,10 @@ function imprimirDatos(pasajero) {
   contenedorItems.appendChild(div)
   })
   precioTotal.innerText = carrito.reduce((acc, dest) => acc + dest.costo, 0)
-  }
-  
+  }*/
   
 
-
-/*
-function pasajeCordoba() {
+/*function pasajeCordoba() {
   const valorBasePasaje = 5000;
   let precioCordoba = valorBasePasaje * 1;
   alert(
@@ -187,7 +207,7 @@ function pasajeCordoba() {
   console.log("Costo final: 5.000 pesos");
 
 
-document.getElementById("cordoba").onclick = function ()
+    document.getElementById("cordoba").onclick = function ()
     { pasajeCordoba();}}
 
 
@@ -236,7 +256,7 @@ function pasajePuntaCana() {
 }
 
 
-/*function seguirComprando() {
+function seguirComprando() {
   agregarPasaje = Number(
     prompt(` - Si Ud desea AGREGAR otro pasaje a su carrito presione ${1}.
                                 
