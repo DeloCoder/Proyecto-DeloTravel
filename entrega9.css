@@ -32,8 +32,8 @@
     button:active { background: #ffffff97;}
 
     .icon {
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
     }
 
     .passengerData {
@@ -45,8 +45,8 @@
     }
 
     .weather {
-        background: #ded3d3d0;
-        color: white;
+        background: #38bd4e;
+        color: rgb(255, 255, 255);
         padding: 2em;
         border-radius: 30px;
         width: 100%;
