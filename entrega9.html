@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AutoTravel</title>
+    <link rel="stylesheet" href="entrega9.css"/>
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="entrega9.js"></script>
+  </head>
+  <body>
+    <button id="helpButton">AYUDA</button>
+      <h3 id="getHelp"></h3>
+      <div id="titulo">
+      </div>
+
+    <section h1="registro" id="formularioRegistro">
+      <form action="entrega9.html" method="GET" class="form-register"></form>
+        <div>
+         <label for="passengerName">Nombre Completo</label>
+         <input type="text" name="passengerName" id="passengerName" required size="35px" value="" />
+        </div>
+        <div>
+         <label for="document">Documento</label>
+         <input type="number" name="document" id="document" />
+        </div>
+        <div>
+         <label for="email">Email</label>
+         <input type="email" name="email" id="email" size="35px"  />
+         </div>
+        <div>
+          <label for="telephone">Telefono</label>
+          <input type="telephone" name="telephone" id="telephone"  />
+        </div>
+      </form>
+   </section>
+
+   <section>
+      <form>
+        <div>
+         <label for="goDate">Fecha de Ida</label>
+         <input type="date" name="goDate" id="goDate" />
+        </div>
+        <div>
+         <label for="backDate">Fecha de Vuelta</label>
+         <input type="date" name="backDate" id="backDate"  />
+        </div>
+        <div>
+          <label for="destination">Destino</label>
+          <select id="destination" name="destination">
+            <option value=" "></option>
+            <option value="Cordoba">Cordoba</option>
+            <option value="Mendoza">Mendoza</option>
+            <option value="santiago De Chile">Santiago De Chile</option>
+            <option value="Bogota">Bogota</option>
+            <option value="Punta Cana">Punta Cana</option>
+          </select>
+        </div>
+        <div>
+          <label for="paymentMethod">Medio de Pago</label>
+          <select id="paymentMethod" name="paymentMethod">
+           <option value=" "></option>
+           <option value="debitCard">Tarjeta de Debito</option>
+           <option value="creditCard">Tarjeta de Credito</option>
+           <option value="transfer">Transferencia Electronica</option>
+        </div>
+        <div>
+           <label for= "cardNumber">Numero de Tarjeta o Transferencia</label>
+           <input type="number" name="cardNumber" id="cardNumber" placeholder="Nro de Tarjeta o Transfer"/>
+         </div>
+        <div>
+          <label for="weather">El Clima en tu Destino</label>
+          <input type="text" name="weather" id="weather" required size="35px" value="" />
+          <button id="weatherButton" type="button" class="searchButton">Enviar</button>
+        </div>
+        <br />
+        <div>
+         <button id="sendData" type="button">Registrar Usuario</button>
+         <button id="buyTicket" type="button">Comprar Pasaje</button>
+        </div>
+      </form>
+    </section>
+    <section>
+<div class="weather">
+  <h2 class="city"></h2>
+  <h2 class="temp"></h2>
+  <img src=" " alt=" " class="icon" />
+  <h2 class="description"></h2>
+  <h2 class="humidity"></h2>
+  <h2 class="wind"></h2>
+
+</div>
+
+
+    </section>
+  </body>
+</html>
