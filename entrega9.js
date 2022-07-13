@@ -12,11 +12,24 @@ function getHelp() {
 function sendForm () {
     const send = document.getElementById("sendData");
     send.addEventListener("click", ()=> {
-    Swal.fire(
-      'Gracias por elegir AutoTravel!',
-      'Su soliciutd ha sido enviada y confirmada, al pie de esta pagina podra confirmar la informacion de su reserva',
-      'success'
-    )
+      Swal.fire({
+        title: 'Esta seguro de confirmar la compra?',
+        text: `Una vez aceptado, se le realizaran los cargos a su medio de pago seleccionado`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI, confirmo'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Pasaje Comprado!',
+            `Su e-ticket a ${newDestination} esta siendo emitido`,
+            'success'
+          )
+          
+        }
+      })  
     userRegistration()} );
 }   
 
@@ -33,29 +46,24 @@ function webHeader() {
 //hago array de usuarios
 let users = [];
   class User {
-  constructor(passengerName, document, email, telephone) {
+  constructor(passengerName, document, dateOfBirth, email, telephone, goDate, backDate, destination, paymentMethod) {
     this.passengerName = passengerName;
     this.document = document;
+    this.dateOfBirth = dateOfBirth;
     this.email = email;
-    this.telephone = telephone
-  }  
-};
-
-//hago array de compras 
-let buy = [];
-class AirBill {
-  constructor(goDate, backDate, destination, paymentMethod) {
+    this.telephone = telephone;
     this.goDate = goDate;
     this.backDate = backDate;
     this.destination = destination;
     this.paymentMethod = paymentMethod;
-  }
+  }  
+};
 
-}
 
 function userRegistration() {
   let newPassengerName = document.getElementById("passengerName").value;
   let newDocument = document.getElementById("document").value;
+  let newDateOfBirth= document.getElementById("dateOfBirth").value;
   let newEmail = document.getElementById("email").value;
   let newTelephone = document.getElementById("telephone").value;
   let newGoDate = document.getElementById("goDate").value;
@@ -66,6 +74,7 @@ function userRegistration() {
   let passenger = new User (
       newPassengerName,
       newDocument,
+      newDateOfBirth,
       newEmail,
       newTelephone,
       newGoDate,
@@ -75,18 +84,29 @@ function userRegistration() {
 
       users.push(passenger);
       printData(passenger);
-  
-  console.log("DATOS DEL PASAJERO+")
-  console.log("Nombre Pasajero: " + newPassengerName );
-  console.log("Documento: " + newDocument);
-  console.log("Email: " + newEmail);
-  console.log("Telefono: " + newTelephone);
-  console.log("Fecha de Ida: " + newGoDate);
-  console.log("Fecha de vuelta: " + newBackDate);
-  console.log("Destino Seleccionado " + newDestination);
-  console.log("Medio de pago seleccionado: " + newPaymentMethod);
-};
 
+      localStorage.setItem(`passengerName`, newPassengerName); 
+      localStorage.setItem(`document`, newDocument);  
+      localStorage.setItem(`dateOfBirth`, newDateOfBirth); 
+      localStorage.setItem(`email`, newEmail); 
+      localStorage.setItem(`telephone`, newTelephone); 
+      localStorage.setItem(`goDate`, newGoDate); 
+      localStorage.setItem(`backDate`, newBackDate); 
+      localStorage.setItem(`destination`, newDestination); 
+      localStorage.setItem(`paymentMethod`, newPaymentMethod); 
+           
+      
+      console.log("++DATOS DEL PASAJERO++")
+      console.log("Nombre Pasajero: " + newPassengerName );
+      console.log("Documento: " + newDocument);
+      console.log("Email: " + newEmail);
+      console.log("Telefono: " + newTelephone);
+      console.log("Fecha de Ida: " + newGoDate);
+      console.log("Fecha de vuelta: " + newBackDate);
+      console.log("Destino Seleccionado " + newDestination);
+      console.log("Medio de pago seleccionado: " + newPaymentMethod);
+};
+const newDestination = document.getElementById("destination").value;
 
 //Utilizo una API para consumir datos sobre clima mundial, donde el pasajero puede elegir cualquier ciudad del mundo 
 let weather = {
@@ -124,49 +144,25 @@ let weather = {
     search: function () {
     this.fetchWeather(document.getElementById("weather").value);
   },
-
 }
-
   document.getElementById("weatherButton").addEventListener("click" , () =>{
   weather.search ();
-} )
+})
 
 
 //Desarrollo el boton de "Comprar Pasaje", le agrego un SWAL para darle dinamismo y estilo
-function buyButton () {
+/*function buyButton () {
   const buyTicket = document.getElementById("buyTicket");
-  buyTicket.addEventListener("click", ()=> {
-   
-    const destination = document.getElementById("destination").value;
-    Swal.fire({
-      title: 'Esta seguro de confirmar la compra?',
-      text: `Una vez aceptado, se le realizaran los cargos a su medio de pago seleccionado`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'SI, confirmo la compra'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Pasaje Comprado!',
-          `Su e-ticket a ${destination} esta siendo emitido`,
-          'success'
-        )
-        
-      }
-    })  
-})};
-
+  buyTicket.addEventListener("click", ()=> {*/
 
 
 //Muestro los datos de los pax y su compra en la pagina, separado x pasajero, a modo de respuesta 
 function printData(passenger) {
  //genero DIV para  meter en box los datos de pax 
   const containerData = document.createElement("div");
-  containerData.setAttribute("class","passengerData");
+  containerData.setAttribute("class", "registerForm");
   document.body.appendChild(containerData);
- //Agrego cpn AppendChild diferentes datos a ese box 
+ //Agrego con AppendChild diferentes datos a ese box 
   const nameToPrint = document.createElement("p");
   nameToPrint.innerText = "Nombre: " + passenger.passengerName;
   containerData.appendChild(nameToPrint);
@@ -207,13 +203,8 @@ function printData(passenger) {
     "Estimado Cliente, su pasaje a Cordoba sera emitido y enviado al Email registrado"
   );
   alert("Costo Final incluidos impuestos: " + precioCordoba + " pesos");
-  console.log("Destino seleccionado: Cordoba");
-  console.log("Costo final: 5.000 pesos");
-
-
-    document.getElementById("cordoba").onclick = function ()
-    { pasajeCordoba();}}
-
+  
+  
 
 function pasajeMendoza() {
   const valorBasePasaje = 5000;
@@ -308,4 +299,4 @@ seguirComprando();*/
 
 webHeader();
 sendForm ();
-buyButton ();
+
