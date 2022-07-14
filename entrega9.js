@@ -52,7 +52,7 @@ if (localStorage.getItem(`users`) != null) {
 //hago array de usuarios
 
   class User {
-  constructor(passengerName, document, dateOfBirth, email, telephone, goDate, backDate, destination, paymentMethod) {
+  constructor(passengerName, document, dateOfBirth, email, telephone, goDate, backDate, destination, paymentMethod, cardNumber) {
     this.passengerName = passengerName;
     this.document = document;
     this.dateOfBirth = dateOfBirth;
@@ -62,6 +62,7 @@ if (localStorage.getItem(`users`) != null) {
     this.backDate = backDate;
     this.destination = destination;
     this.paymentMethod = paymentMethod;
+    this.cardNumber = cardNumber;
     //array de pasaje comprado, falta agregar function para q cuando uso boton me meta aca los pasajes comprados,
     this.buyedTickets = [];
   }  
@@ -78,6 +79,7 @@ function userRegistration() {
   let newBackDate = document.getElementById("backDate").value;
   let newDestination = document.getElementById("destination").value;
   let newPaymentMethod = document.getElementById("paymentMethod").value;
+  let newCardNumber = document.getElementById("cardNumber").value;
 
   let passenger = new User (
       newPassengerName,
@@ -88,14 +90,14 @@ function userRegistration() {
       newGoDate,
       newBackDate,
       newDestination,
-      newPaymentMethod);
-
+      newPaymentMethod,
+      newCardNumber);
       users.push(passenger);
 
+      //a traves de JSON.stringyfi transformo los datosa e string y lo meto al Local Storage
       localStorage.setItem(`users`, JSON.stringify(users));
       printData(passenger);
   
-      
       console.log("++DATOS DEL PASAJERO++")
       console.log("Nombre Pasajero: " + newPassengerName );
       console.log("Documento: " + newDocument);
@@ -148,12 +150,6 @@ let weather = {
   document.getElementById("weatherButton").addEventListener("click" , () =>{
   weather.search ();
 })
-
-
-//Desarrollo el boton de "Comprar Pasaje", le agrego un SWAL para darle dinamismo y estilo
-/*function buyButton () {
-  const buyTicket = document.getElementById("buyTicket");
-  buyTicket.addEventListener("click", ()=> {*/
 
 
 //Muestro los datos de los pax y su compra en la pagina, separado x pasajero, a modo de respuesta 
