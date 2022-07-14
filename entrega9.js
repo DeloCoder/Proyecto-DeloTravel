@@ -43,8 +43,14 @@ function webHeader() {
   passengerList.innerText = "Listado de pasajes emitidos y datos de contacto:";
   document.body.appendChild(passengerList);}
 
+let users;
+if (localStorage.getItem(`users`) != null) {
+  users = JSON.parse(localStorage.getItem("users"));
+} else  {users = []  
+}
+
 //hago array de usuarios
-let users = [];
+
   class User {
   constructor(passengerName, document, dateOfBirth, email, telephone, goDate, backDate, destination, paymentMethod) {
     this.passengerName = passengerName;
@@ -56,6 +62,8 @@ let users = [];
     this.backDate = backDate;
     this.destination = destination;
     this.paymentMethod = paymentMethod;
+    //array de pasaje comprado, falta agregar function para q cuando uso boton me meta aca los pasajes comprados,
+    this.buyedTickets = [];
   }  
 };
 
@@ -83,18 +91,10 @@ function userRegistration() {
       newPaymentMethod);
 
       users.push(passenger);
-      printData(passenger);
 
-      localStorage.setItem(`passengerName`, newPassengerName); 
-      localStorage.setItem(`document`, newDocument);  
-      localStorage.setItem(`dateOfBirth`, newDateOfBirth); 
-      localStorage.setItem(`email`, newEmail); 
-      localStorage.setItem(`telephone`, newTelephone); 
-      localStorage.setItem(`goDate`, newGoDate); 
-      localStorage.setItem(`backDate`, newBackDate); 
-      localStorage.setItem(`destination`, newDestination); 
-      localStorage.setItem(`paymentMethod`, newPaymentMethod); 
-           
+      localStorage.setItem(`users`, JSON.stringify(users));
+      printData(passenger);
+  
       
       console.log("++DATOS DEL PASAJERO++")
       console.log("Nombre Pasajero: " + newPassengerName );
