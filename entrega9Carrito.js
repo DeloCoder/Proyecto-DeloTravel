@@ -51,6 +51,32 @@ if (localStorage.getItem(`users`) != null) {
 };
 
 
+addAirTicketToCart ("san rafael", 15000, "south america");
+  console.log(shoppingCart);
+
+
+
+
+
+let airTicket = function (city, price, region) {
+    this.city = city
+    this.price = price
+    this.region = region
+};
+
+function addAirTicketToCart (city, price, region) {
+  for (let i in shoppingCart) {
+      if (shoppingCart [i].city === city) {
+          return;
+    }  
+  }
+  let airTicket = new airTicket (city, price, region)
+  shoppingCart.push(airTicket);
+ 
+};
+
+
+//this creates a tickets array with some characteristics, as price,and region
 const airTicket = [
   {city: `Cordoba`, price: 10000, region: `south america`},
   {city: `Mendoza`, price: 12000, region: `south america`},
@@ -70,10 +96,14 @@ const airTicket = [
   {city: `New York`, price: 70000, region: `North america`},
   {city: `Madrid`, price: 110000, region: `Europe`},
   {city: `Roma`, price: 130000, region: `Europe`},
+  this.city = city,
+
+
 ];
 
-
 let shoppingCart = [];
+
+
 
 //This section simulates the application of Iva (tax) to the original price
   const airTicketIva = airTicket.map(item => {
@@ -81,7 +111,8 @@ let shoppingCart = [];
 //this line changes the price + iva in a new object (newAirTicketPrice) so the original objects of the tickets array doesn't change
   return {...item, price: newAirTicketPrice}
 })
-console.log(shoppingCart);
+
+
 
 //This creates User Array, with registration information + destination information and payment method. 
   class User {
@@ -210,8 +241,53 @@ function printData(passenger) {
 
 
 
+  //Armado del carrito
+  /*const contenedorItems = document.getElementById('contenedorItems')
+  let precioTotal = 0
+  const mostrarItems = () => {
+  contenedorItems.innerHTML = ""
+  destinos.forEach((dest) => {
+  const div = document.createElement('div')
+  div.className = ('productoVisible')
+  div.innerHTML =
+  contenedorItems.appendChild(div)
+  })
+  precioTotal.innerText = carrito.reduce((acc, dest) => acc + dest.costo, 0)
+  }
   
+
+
+  }
+  if (agregarPasaje === 1) {
+    elegirDestino();
+    seguirComprando();
+  } else if (agregarPasaje === 2) {
+    let evaluacion = 0;
+    evaluacion = prompt(
+      "Seria tan amable de evaluar su experiencia con la terminal Autoservicio puntuando de 1 a 10 ? (siendo 1 muy malo, y 10 excelente)"
+    );
+    console.log("Calificacion de usuario recibida: " + evaluacion);
+
+    if (evaluacion <= 4) {
+      let evaluacion2 = prompt(
+        "Seria tan amable indicarnos motivo de su calificacion? "
+      );
+      console.log(
+        "!!!ATENCION!!!  Calificacion de servicio DEFICIENTE!          Reevaluar con supervisor servicio ofrecido / Motivo declarado:    " +
+          evaluacion2
+      );
+    }
+  }
+  {
+    alert(
+      "Muchas gracias por dedicar su tiempo para valorar nuestro sistema! Que tenga una excelente jornada"
+    );
+  }
+} 
+seguirComprando();*/
+
+
 pageHeader();
 sendForm ();
-
+addAirTicketToCart ();
 
