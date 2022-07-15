@@ -23,7 +23,7 @@ function sendForm () {
         if (result.isConfirmed) {
           Swal.fire(
             'Pasaje Comprado!',
-            `Su e-ticket al destino seleccionado esta siendo emitido`,
+            `Su e-ticket a ${newDestination} esta siendo emitido`,
             'success'
           )
           
@@ -44,21 +44,40 @@ function pageHeader() {
   passengerList.innerText = "Listado de pasajes emitidos y datos de contacto:";
   document.body.appendChild(passengerList);}
 
-
-
 let users;
-    if (localStorage.getItem(`users`) != null) {
-    users = JSON.parse(localStorage.getItem("users"));
-    } else  {users = []  
-};
-let tickets;
-    if (localStorage.getItem(`tickets`) != null) {
-    tickets = JSON.parse(localStorage.getItem("tickets"));
-    } else  {tickets = []  
+if (localStorage.getItem(`users`) != null) {
+  users = JSON.parse(localStorage.getItem("users"));
+} else  {users = []  
 };
 
 
-let airTicket = [
+addAirTicketToCart ("san rafael", 15000, "south america");
+  console.log(shoppingCart);
+
+
+
+
+
+let airTicket = function (city, price, region) {
+    this.city = city
+    this.price = price
+    this.region = region
+};
+
+function addAirTicketToCart (city, price, region) {
+  for (let i in shoppingCart) {
+      if (shoppingCart [i].city === city) {
+          return;
+    }  
+  }
+  let airTicket = new airTicket (city, price, region)
+  shoppingCart.push(airTicket);
+ 
+};
+
+
+//this creates a tickets array with some characteristics, as price,and region
+const airTicket = [
   {city: `Cordoba`, price: 10000, region: `south america`},
   {city: `Mendoza`, price: 12000, region: `south america`},
   {city: `Tucuman`, price: 12000, region: `south america`},
@@ -77,9 +96,13 @@ let airTicket = [
   {city: `New York`, price: 70000, region: `North america`},
   {city: `Madrid`, price: 110000, region: `Europe`},
   {city: `Roma`, price: 130000, region: `Europe`},
+  this.city = city,
+
+
 ];
 
- 
+let shoppingCart = [];
+
 
 
 //This section simulates the application of Iva (tax) to the original price
@@ -87,28 +110,26 @@ let airTicket = [
   let newAirTicketPrice = item.price + item.price*1.21
 //this line changes the price + iva in a new object (newAirTicketPrice) so the original objects of the tickets array doesn't change
   return {...item, price: newAirTicketPrice}
-  
 })
 
+
+
 //This creates User Array, with registration information + destination information and payment method. 
-class User {
-  constructor(passengerName, document, dateOfBirth, email, telephone) {
+  class User {
+  constructor(passengerName, document, dateOfBirth, email, telephone, goDate, backDate, destination, paymentMethod, cardNumber) {
     this.passengerName = passengerName;
     this.document = document;
     this.dateOfBirth = dateOfBirth;
     this.email = email;
-    this.telephone = telephone}
-};
-
-class Ticket {
-  constructor (passengerName, goDate, backDate, destination, paymentMethod, cardNumber) {
-    this.passengerName = passengerName;
+    this.telephone = telephone;
     this.goDate = goDate;
     this.backDate = backDate;
-    this.destination = destination
+    this.destination = destination;
     this.paymentMethod = paymentMethod;
-    this.cardNumber = cardNumber}  
+    this.cardNumber = cardNumber;
+  }  
 };
+
 
 function userRegistration() {
   let newPassengerName = document.getElementById("passengerName").value;
@@ -127,25 +148,19 @@ function userRegistration() {
       newDocument,
       newDateOfBirth,
       newEmail,
-      newTelephone);
-      users.push(passenger);
-
-  let soldTicket = new Ticket (
-      newPassengerName,
+      newTelephone,
       newGoDate,
       newBackDate,
       newDestination,
       newPaymentMethod,
       newCardNumber);
-      tickets.push(soldTicket);
-      shoppingCart.push(soldTicket);
-
+      users.push(passenger);
 
       //a traves de JSON.stringyfi transformo los datos en string y lo meto al Local Storage
       localStorage.setItem(`users`, JSON.stringify(users));
-      localStorage.setItem(`tickets`, JSON.stringify(tickets));
-      
       printData(passenger);
+  
+      //This prints all the relevant info for the travel agency/web operator.  
       console.log("++DATOS DEL PASAJERO++")
       console.log("Nombre Pasajero: " + newPassengerName );
       console.log("Documento: " + newDocument);
@@ -157,10 +172,7 @@ function userRegistration() {
       console.log("Medio de pago seleccionado: " + newPaymentMethod);
       console.log("-=-=-=-=-=-=-=-=-=-=-=- END =-=-=-=-=-=-=-=-=-=-=-=-=-");
 };
-
-let shoppingCart = [];
-console.log(shoppingCart);
-printTicket ();
+const newDestination = document.getElementById("destination").value;
 
 //Utilizo una API para consumir datos sobre clima mundial, donde el pasajero puede elegir cualquier ciudad del mundo 
 let weather = {
@@ -223,22 +235,59 @@ function printData(passenger) {
   const telephoneToPrint = document.createElement("p");
   telephoneToPrint.innerText = "Telefono: " + passenger.telephone;
   containerData.appendChild(telephoneToPrint);
-  
-
-  function printTicket(soldTicket) {
-    const ticketData = document.createElement("div");
-    ticketData.setAttribute("class", "registerForm");
-    document.body.appendChild(ticketData);
-    
-
-    const destinationToPrint = document.createElement("p");
-  destinationToPrint.innerText = "Destino Seleccionado: " + soldTicket.destination;
+  const destinationToPrint = document.createElement("p");
+  destinationToPrint.innerText = "Destino Seleccionado: " + passenger.destination;
   containerData.appendChild(destinationToPrint);}
+
+
+
+  //Armado del carrito
+  /*const contenedorItems = document.getElementById('contenedorItems')
+  let precioTotal = 0
+  const mostrarItems = () => {
+  contenedorItems.innerHTML = ""
+  destinos.forEach((dest) => {
+  const div = document.createElement('div')
+  div.className = ('productoVisible')
+  div.innerHTML =
+  contenedorItems.appendChild(div)
+  })
+  precioTotal.innerText = carrito.reduce((acc, dest) => acc + dest.costo, 0)
   }
-
-
   
+
+
+  }
+  if (agregarPasaje === 1) {
+    elegirDestino();
+    seguirComprando();
+  } else if (agregarPasaje === 2) {
+    let evaluacion = 0;
+    evaluacion = prompt(
+      "Seria tan amable de evaluar su experiencia con la terminal Autoservicio puntuando de 1 a 10 ? (siendo 1 muy malo, y 10 excelente)"
+    );
+    console.log("Calificacion de usuario recibida: " + evaluacion);
+
+    if (evaluacion <= 4) {
+      let evaluacion2 = prompt(
+        "Seria tan amable indicarnos motivo de su calificacion? "
+      );
+      console.log(
+        "!!!ATENCION!!!  Calificacion de servicio DEFICIENTE!          Reevaluar con supervisor servicio ofrecido / Motivo declarado:    " +
+          evaluacion2
+      );
+    }
+  }
+  {
+    alert(
+      "Muchas gracias por dedicar su tiempo para valorar nuestro sistema! Que tenga una excelente jornada"
+    );
+  }
+} 
+seguirComprando();*/
+
+
 pageHeader();
 sendForm ();
-
+addAirTicketToCart ();
 
