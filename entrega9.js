@@ -98,7 +98,7 @@ function userRegistration() {
       localStorage.setItem(`users`, JSON.stringify(users));
       printData(passenger);
   
-      console.log("++DATOS DEL PASAJERO++")
+      console.log("--DATOS DEL PASAJERO--")
       console.log("Nombre Pasajero: " + newPassengerName );
       console.log("Documento: " + newDocument);
       console.log("Email: " + newEmail);
@@ -107,6 +107,7 @@ function userRegistration() {
       console.log("Fecha de vuelta: " + newBackDate);
       console.log("Destino Seleccionado " + newDestination);
       console.log("Medio de pago seleccionado: " + newPaymentMethod);
+      console.log("+++++++++++++++++++++++++++++++");
 };
 const newDestination = document.getElementById("destination").value;
 
