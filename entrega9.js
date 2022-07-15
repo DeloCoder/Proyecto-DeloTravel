@@ -90,7 +90,7 @@ let airTicket = [
   
 })
 
-//This creates User Array, with registration information + destination information and payment method. 
+//This creates User Array, and Ticket Array,  with registration + destination information + payment method. 
 class User {
   constructor(passengerName, document, dateOfBirth, email, telephone) {
     this.passengerName = passengerName;
@@ -141,11 +141,12 @@ function userRegistration() {
       shoppingCart.push(soldTicket);
 
 
-      //a traves de JSON.stringyfi transformo los datos en string y lo meto al Local Storage
+      //Transforms data to string using JSON.stringify, and inserting this to LS
       localStorage.setItem(`users`, JSON.stringify(users));
       localStorage.setItem(`tickets`, JSON.stringify(tickets));
       
       printData(passenger);
+      printTicket (soldTicket);
       console.log("++DATOS DEL PASAJERO++")
       console.log("Nombre Pasajero: " + newPassengerName );
       console.log("Documento: " + newDocument);
@@ -160,7 +161,7 @@ function userRegistration() {
 
 let shoppingCart = [];
 console.log(shoppingCart);
-printTicket ();
+
 
 //Utilizo una API para consumir datos sobre clima mundial, donde el pasajero puede elegir cualquier ciudad del mundo 
 let weather = {
@@ -195,8 +196,8 @@ let weather = {
   document.querySelector(".wind").innerText = "Viento: " + speed + "Km/h";
   },
 
-    search: function () {
-    this.fetchWeather(document.getElementById("weather").value);
+  search: function () {
+  this.fetchWeather(document.getElementById("weather").value);
   },
 }
   document.getElementById("weatherButton").addEventListener("click" , () =>{
@@ -206,34 +207,39 @@ let weather = {
 
 //Muestro los datos de los pax y su compra en la pagina, separado x pasajero, a modo de respuesta 
 function printData(passenger) {
- //generating a DIV to add data 
-  const containerData = document.createElement("div");
-  containerData.setAttribute("class", "registerForm");
-  document.body.appendChild(containerData);
- //Adding with appendChild data to an info box on the web
-  const nameToPrint = document.createElement("p");
-  nameToPrint.innerText = "Nombre: " + passenger.passengerName;
-  containerData.appendChild(nameToPrint);
-  const documentToPrint = document.createElement("p");
-  documentToPrint.innerText = "Documento: " + passenger.document;
-  containerData.appendChild(documentToPrint);
-  const emailToPrint = document.createElement("p");
-  emailToPrint.innerText = "Email: " + passenger.email;
-  containerData.appendChild(emailToPrint);
-  const telephoneToPrint = document.createElement("p");
-  telephoneToPrint.innerText = "Telefono: " + passenger.telephone;
-  containerData.appendChild(telephoneToPrint);
+    //generating a DIV to add data 
+    const containerData = document.createElement("div");
+    containerData.setAttribute("class", "registerForm");
+    document.body.appendChild(containerData);
+    //Adding with appendChild data to an info box on the web
+    const nameToPrint = document.createElement("p");
+    nameToPrint.innerText = "Nombre: " + passenger.passengerName;
+    containerData.appendChild(nameToPrint);
+    const documentToPrint = document.createElement("p");
+    documentToPrint.innerText = "Documento: " + passenger.document;
+    containerData.appendChild(documentToPrint);
+    const emailToPrint = document.createElement("p");
+    emailToPrint.innerText = "Email: " + passenger.email;
+    containerData.appendChild(emailToPrint);
+    const telephoneToPrint = document.createElement("p");
+    telephoneToPrint.innerText = "Telefono: " + passenger.telephone;
+    containerData.appendChild(telephoneToPrint);
+}
   
 
-  function printTicket(soldTicket) {
+function printTicket(soldTicket) {
     const ticketData = document.createElement("div");
     ticketData.setAttribute("class", "registerForm");
     document.body.appendChild(ticketData);
-    
-
     const destinationToPrint = document.createElement("p");
-  destinationToPrint.innerText = "Destino Seleccionado: " + soldTicket.destination;
-  containerData.appendChild(destinationToPrint);}
+    destinationToPrint.innerText = "Destino Seleccionado: " + soldTicket.destination;
+    ticketData.appendChild(destinationToPrint);
+    const goDateToPrint = document.createElement("p");
+    goDateToPrint.innerText = "Fecha de Ida: " + soldTicket.goDate;
+    ticketData.appendChild(goDateToPrint);
+    const backDateToPrint = document.createElement("p");
+    backDateToPrint.innerText = "Fecha de Ida: " + soldTicket.backDate;
+    ticketData.appendChild(backDateToPrint);
   }
 
 
