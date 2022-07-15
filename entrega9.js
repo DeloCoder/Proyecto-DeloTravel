@@ -1,5 +1,4 @@
 
-
 function getHelp() {
     document.getElementById("getHelp").innerHTML =
     "Un agente se comunicara con Ud a la brevedad";
@@ -19,7 +18,7 @@ function sendForm () {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'SI, confirmo'
+        confirmButtonText: 'SI!'
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire(
@@ -34,7 +33,9 @@ function sendForm () {
 }   
 
 
-function webHeader() {
+
+//this makes appear tittles etc on the web
+function pageHeader() {
   const form = document.getElementById("titulo")
   const mainTitle = document.createElement("h1");
   mainTitle.innerText = "AUTOTRAVEL";
@@ -47,10 +48,74 @@ let users;
 if (localStorage.getItem(`users`) != null) {
   users = JSON.parse(localStorage.getItem("users"));
 } else  {users = []  
-}
+};
 
-//hago array de usuarios
 
+addAirTicketToCart ("san rafael", 15000, "south america");
+  console.log(shoppingCart);
+
+
+
+
+
+let airTicket = function (city, price, region) {
+    this.city = city
+    this.price = price
+    this.region = region
+};
+
+function addAirTicketToCart (city, price, region) {
+  for (let i in shoppingCart) {
+      if (shoppingCart [i].city === city) {
+          return;
+    }  
+  }
+  let airTicket = new airTicket (city, price, region)
+  shoppingCart.push(airTicket);
+ 
+};
+
+
+/*this creates a tickets array with some characteristics, as price,and region
+const airTicket = function (city, price, region) [
+  {city: `Cordoba`, price: 10000, region: `south america`},
+  {city: `Mendoza`, price: 12000, region: `south america`},
+  {city: `Tucuman`, price: 12000, region: `south america`},
+  {city: `Neuquen`, price: 13000, region: `south america`},
+  {city: `Rio Gallegos`, price: 15000, region: `south america`},
+  {city: `El Calafate`, price: 17000, region: `south america`},
+  {city: `Ushuaia`, price: 19000, region: `south america`},
+  {city: `Cataratas del Iguzau`, price: 19000, region: `south america`},
+  {city: `Santiago de Chile`, price: 35000, region: `south america`},
+  {city: `Rio de Janeiro`, price: 38000, region: `south america`},
+  {city: `San Pablo`, price: 38000, region: `south america`},
+  {city: `Bogota`, price: 45000, region: `south america`},
+  {city: `Punta Cana`, price: 49000, region: `Caribbean`},
+  {city: `Cancun`, price: 49000, region: `Caribbean`},
+  {city: `Miami`, price: 60000, region: `North america`},
+  {city: `New York`, price: 70000, region: `North america`},
+  {city: `Madrid`, price: 110000, region: `Europe`},
+  {city: `Roma`, price: 130000, region: `Europe`},
+  this.city = city,
+
+
+];*/
+
+
+let shoppingCart = [];
+
+
+
+//This section simulates the application of Iva (tax) to the original price
+  const airTicketIva = airTicket.map(item => {
+  let newAirTicketPrice = item.price + item.price*1.21
+//this line changes the price + iva in a new object (newAirTicketPrice) so the original objects of the tickets array doesn't change
+  return {...item, price: newAirTicketPrice}
+})
+
+
+
+//This creates User Array, with registration information + destination information and payment method. 
   class User {
   constructor(passengerName, document, dateOfBirth, email, telephone, goDate, backDate, destination, paymentMethod, cardNumber) {
     this.passengerName = passengerName;
@@ -63,8 +128,6 @@ if (localStorage.getItem(`users`) != null) {
     this.destination = destination;
     this.paymentMethod = paymentMethod;
     this.cardNumber = cardNumber;
-    //array de pasaje comprado, falta agregar function para q cuando uso boton me meta aca los pasajes comprados,
-    this.buyedTickets = [];
   }  
 };
 
@@ -94,10 +157,11 @@ function userRegistration() {
       newCardNumber);
       users.push(passenger);
 
-      //a traves de JSON.stringyfi transformo los datosa e string y lo meto al Local Storage
+      //a traves de JSON.stringyfi transformo los datos en string y lo meto al Local Storage
       localStorage.setItem(`users`, JSON.stringify(users));
       printData(passenger);
   
+      //This prints all the relevant info for the travel agency/web operator.  
       console.log("++DATOS DEL PASAJERO++")
       console.log("Nombre Pasajero: " + newPassengerName );
       console.log("Documento: " + newDocument);
@@ -107,6 +171,7 @@ function userRegistration() {
       console.log("Fecha de vuelta: " + newBackDate);
       console.log("Destino Seleccionado " + newDestination);
       console.log("Medio de pago seleccionado: " + newPaymentMethod);
+      console.log("-=-=-=-=-=-=-=-=-=-=-=- END =-=-=-=-=-=-=-=-=-=-=-=-=-");
 };
 const newDestination = document.getElementById("destination").value;
 
@@ -154,11 +219,11 @@ let weather = {
 
 //Muestro los datos de los pax y su compra en la pagina, separado x pasajero, a modo de respuesta 
 function printData(passenger) {
- //genero DIV para  meter en box los datos de pax 
+ //generating a DIV to add data 
   const containerData = document.createElement("div");
   containerData.setAttribute("class", "registerForm");
   document.body.appendChild(containerData);
- //Agrego con AppendChild diferentes datos a ese box 
+ //Adding with appendChild data to an info box on the web
   const nameToPrint = document.createElement("p");
   nameToPrint.innerText = "Nombre: " + passenger.passengerName;
   containerData.appendChild(nameToPrint);
@@ -171,9 +236,9 @@ function printData(passenger) {
   const telephoneToPrint = document.createElement("p");
   telephoneToPrint.innerText = "Telefono: " + passenger.telephone;
   containerData.appendChild(telephoneToPrint);
-  const destinatioToPrint = document.createElement("p");
-  destinatioToPrint.innerText = "Destino Seleccionado: " + passenger.destination;
-  containerData.appendChild(destinatioToPrint);}
+  const destinationToPrint = document.createElement("p");
+  destinationToPrint.innerText = "Destino Seleccionado: " + passenger.destination;
+  containerData.appendChild(destinationToPrint);}
 
 
 
@@ -189,80 +254,10 @@ function printData(passenger) {
   contenedorItems.appendChild(div)
   })
   precioTotal.innerText = carrito.reduce((acc, dest) => acc + dest.costo, 0)
-  }*/
+  }
   
 
-/*function pasajeCordoba() {
-  const valorBasePasaje = 5000;
-  let precioCordoba = valorBasePasaje * 1;
-  alert(
-    "Estimado Cliente, su pasaje a Cordoba sera emitido y enviado al Email registrado"
-  );
-  alert("Costo Final incluidos impuestos: " + precioCordoba + " pesos");
-  
-  
 
-function pasajeMendoza() {
-  const valorBasePasaje = 5000;
-  let precioMendoza = valorBasePasaje * 2;
-  alert(
-    "Estimado Cliente, su pasaje a Mendoza sera emitido y enviado al Email registrado"
-  );
-  alert("Valor Total: " + precioMendoza + " pesos");
-  console.log("Destino seleccionado: Mendoza");
-  console.log("Costo final: 10.000 pesos");
-}
-
-function pasajeSantiagoDeChile() {
-  const valorBasePasaje = 5000;
-  let precioSantiagoDeChile = valorBasePasaje * 4;
-  alert(
-    "Estimado Cliente, su pasaje a Santiago De Chile sera emitido y enviado al Email registrado"
-  );
-  alert("Valor Total: " + precioSantiagoDeChile + " pesos");
-  console.log("Destino seleccionado: Santiago de Chile");
-  console.log("Costo final: 20.000 pesos");
-}
-
-function pasajeBogota() {
-  const valorBasePasaje = 5000;
-  let precioBogota = valorBasePasaje * 8;
-  alert(
-    "Estimado Cliente, su pasaje a Bogota sera emitido y enviado al Email registrado"
-  );
-  alert("Valor Total: " + precioBogota + " pesos");
-  console.log("Destino seleccionado: Bogota");
-  console.log("Costo final: 40.000 pesos");
-}
-
-function pasajePuntaCana() {
-  const valorBasePasaje = 5000;
-  let precioPuntaCana = valorBasePasaje * 10;
-  alert(
-    "Estimado Cliente, su pasaje a Punta Cana sera emitido y enviado al Email registrado"
-  );
-  alert("Valor Total: " + precioPuntaCana + " pesos");
-  console.log("Destino seleccionado: Punta Cana");
-  console.log("Costo final: 50.000 pesos");
-}
-
-
-function seguirComprando() {
-  agregarPasaje = Number(
-    prompt(` - Si Ud desea AGREGAR otro pasaje a su carrito presione ${1}.
-                                
-    * Si lo que Ud desea es FINALIZAR la operacion, presione ${2}.`)
-  );
-  switch (agregarPasaje) {
-    case 1: {
-      registrarUsuario();
-      break;
-    }
-
-    case 2: {
-      alert("Gracias, esperamos verlo muy pronto otra vez, en DeloViajes");
-      break;
-    }
   }
   if (agregarPasaje === 1) {
     elegirDestino();
@@ -293,6 +288,7 @@ function seguirComprando() {
 seguirComprando();*/
 
 
-webHeader();
+pageHeader();
 sendForm ();
+addAirTicketToCart ();
 
