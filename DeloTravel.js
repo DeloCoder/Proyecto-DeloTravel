@@ -159,9 +159,21 @@ function userRegistration() {
       console.log("-=-=-=-=-=-=-=-=-=-=-=- END =-=-=-=-=-=-=-=-=-=-=-=-=-");
 };
 
-let shoppingCart = [];
-console.log(shoppingCart);
 
+//INTENTO para sumar valores de tickets comprados dentro de shoppingCArt!
+let shoppingCart = [];
+let sum=0;
+function showTotalPrice () {
+      if (shoppingCart != null) {
+        for (let i=`price`; i<sum.lenght; i++)
+        {sum = shoppingCart[i] 
+      };
+  };
+
+}
+
+console.log(shoppingCart);
+console.log(sum);
 
 //Using a free API to get world wide weather 
 let weather = {
@@ -244,5 +256,5 @@ function printData(passenger) {
   
 pageHeader();
 sendForm ();
-
+showTotalPrice ();
 
